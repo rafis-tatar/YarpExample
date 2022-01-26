@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+
+  #keycloak:
+  #  image: quay.io/keycloak/keycloak:16.1.0
+  #  environment:
+  #      - KEYCLOAK_USER=admin
+  #      - KEYCLOAK_PASSWORD=admin
+  #  ports:
+  #    - "8080:8080"
+
+  yarpreversproxy:
+    image: ${DOCKER_REGISTRY-}yarpreversproxy
+    build:
+      context: .
+      dockerfile: YarpReversProxy/Dockerfile
+
+  service1:
+    image: ${DOCKER_REGISTRY-}service1   
+    build:
+      context: .
+      dockerfile: Service1/Dockerfile
+
+  service2:
+    image: ${DOCKER_REGISTRY-}service2
+    build:
+      context: .
+      dockerfile: Service2/Dockerfile
+
+
+  authservice:
+    image: ${DOCKER_REGISTRY-}authservice
+    build:
+      context: .
+      dockerfile: AuthService/Dockerfile
+

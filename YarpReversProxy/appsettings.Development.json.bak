@@ -1,0 +1,39 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "ReverseProxy": {
+    "Routes": {
+      "route1": {
+        "ClusterId": "ServiceApi",
+        "Match": {
+          "Host": [ "localhost", "127.0.0.1" ],
+          "Path": "/service/api/{**catch-all}"
+        },
+        "Transforms": [
+          {
+            "PathRemovePrefix": "/service/api"
+          }
+        ]
+      }
+    },
+    "Clusters": {
+      "ServiceApi": {
+        "LoadBalancingPolicy": "RoundRobin",
+        "Destinations": {
+          "Service_destination1": {
+            "Address": "http://service1/"
+          },
+          "Service_destination2": {
+            "Address": "http://service2/"
+          }
+        }
+      }
+    }
+  }
+}
